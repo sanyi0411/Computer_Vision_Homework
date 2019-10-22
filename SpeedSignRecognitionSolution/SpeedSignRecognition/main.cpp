@@ -3,6 +3,7 @@
 #include "opencv2/highgui.hpp"
 #include "opencv2/imgproc.hpp"
 #include "clParser.h"
+#include "detectCircles.h"
 
 int main(int argc, char **argv)
 {
@@ -16,4 +17,7 @@ int main(int argc, char **argv)
     {
         std::cout << e.what() << std::endl;
     }
+
+    DetectCircles circles(cv::imread("D:/Kepek/OpenCV/30eso1.jpg"));
+    circles.findCircle();
 }

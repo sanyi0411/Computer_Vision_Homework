@@ -1,12 +1,6 @@
 #include "readSpeedLimit.h"
 
-
-
-ReadSpeedLimit::ReadSpeedLimit()
+ReadSpeedLimit::ReadSpeedLimit(cv::Mat input)
 {
-}
 
-
-ReadSpeedLimit::~ReadSpeedLimit()
-{
 }
