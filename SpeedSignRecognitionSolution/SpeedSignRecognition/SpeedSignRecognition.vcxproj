@@ -159,7 +159,7 @@
   <ItemGroup>
     <ClInclude Include="clParser.h" />
     <ClInclude Include="detectCircles.h" />
-    <ClInclude Include="detectText.h" />
+    <ClInclude Include="imageLoader.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="readSpeedLimit.h" />
     <ClInclude Include="readText.h" />
@@ -167,7 +167,7 @@
   <ItemGroup>
     <ClCompile Include="clParser.cpp" />
     <ClCompile Include="detectCircles.cpp" />
-    <ClCompile Include="detectText.cpp" />
+    <ClCompile Include="imageLoader.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

@@ -30,7 +30,7 @@
     <ClInclude Include="readText.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="detectText.h">
+    <ClInclude Include="imageLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -53,7 +53,7 @@
     <ClCompile Include="readText.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="detectText.cpp">
+    <ClCompile Include="imageLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

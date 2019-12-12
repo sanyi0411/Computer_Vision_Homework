@@ -5,6 +5,7 @@
 #include "clParser.h"
 #include "detectCircles.h"
 #include "readSpeedLimit.h"
+#include "imageLoader.h"
 
 int main(int argc, char **argv)
 {
@@ -19,36 +20,11 @@ int main(int argc, char **argv)
         std::cout << e.what() << std::endl;
     }
 
-    cv::Mat frame;
+	std::unique_ptr<ImageLoader> loader(new ImageLoader);
+	std::vector<cv::Mat> inputImages = loader->loadImagesFromFolder("D:/Kepek/OpenCV/30");
 
-    cv::VideoCapture cap;
-    cap.open(0);
-
-    if (cap.isOpened() == false)
-    {
-        std::cout << "Cannot open the video camera" << std::endl;
-        std::cin.get();
-        return -1;
-    }
-
-    ReadSpeedLimit *operation = new ReadSpeedLimit;
-
-    while (true)
-    {
-        cap >> frame;
-        if (frame.empty())
-        {
-            std::cout << "Video camera is disconnected" << std::endl;
-            std::cin.get();
-            break;
-        }
-        cv::imshow("Webcam", frame);
-
-        std::string limit = operation->execute(frame);
-        std::cout << limit << std::endl;
-        cv::waitKey(20);
-    }
-
+	std::unique_ptr<ReadSpeedLimit> operation(new ReadSpeedLimit);
+	operation->execute(inputImages);
 
     return 0;
 }

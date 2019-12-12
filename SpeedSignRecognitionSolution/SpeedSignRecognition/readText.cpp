@@ -37,15 +37,15 @@ std::string ReadText::readSpeedLimit(cv::Mat input)
     copyMakeBorder(input, input, borderTopBottom, borderTopBottom, borderLeftRight, borderLeftRight,
         cv::BORDER_CONSTANT, cv::Scalar(255, 255, 255));
     cv::imshow("Circle", input);
-
+/*
     std::string text;
     tesseract::TessBaseAPI *ocr = new tesseract::TessBaseAPI();
     ocr->Init(NULL, "eng", tesseract::OEM_DEFAULT);
     ocr->SetPageSegMode(tesseract::PSM_AUTO);
     ocr->SetImage(input.data, input.cols, input.rows, 1, input.step);
     text = std::string(ocr->GetUTF8Text());
-
     delete ocr;
     return text;
+	*/
 }
 
