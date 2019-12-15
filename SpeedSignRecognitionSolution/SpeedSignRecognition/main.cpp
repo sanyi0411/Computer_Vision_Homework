@@ -36,8 +36,9 @@ int main(int argc, char **argv)
     //Read sign
     std::unique_ptr<ReadSpeedLimit> operation = std::make_unique<ReadSpeedLimit>();
     int found = 0;
+    std::vector<std::string> results;
     for (auto image : inputImages) {
-        std::vector<std::string> results = operation->execute(image, show);
+        results = operation->execute(image, show);
         for (auto result : results) {
             if (result.find(limit) != std::string::npos) {
                 found++;
@@ -48,6 +49,11 @@ int main(int argc, char **argv)
     if (mode) {
         std::cout << "Correctly detected: " << found << std::endl;
         std::cout << "We were " << (double)found / (double)inputImages.size() * 100 << "% effective" << std::endl;
+    }
+    else {
+        for (auto result : results) {
+            std::cout << result << std::endl;
+        }
     }
 
     return 0;

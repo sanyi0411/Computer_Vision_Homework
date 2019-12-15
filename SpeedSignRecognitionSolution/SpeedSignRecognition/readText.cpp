@@ -21,8 +21,13 @@ std::vector<std::string> ReadText::readSpeedLimit(std::vector<cv::Mat> input, bo
         int borderLeftRight = (int)(0.20 * image.cols);
         copyMakeBorder(image, image, borderTopBottom, borderTopBottom, borderLeftRight, borderLeftRight,
             cv::BORDER_CONSTANT, cv::Scalar(255, 255, 255));
+
         cv::cvtColor(image, image, cv::COLOR_BGR2GRAY);
-        cv::threshold(image, image, 90, 255, cv::THRESH_BINARY);
+        if (show) {
+            cv::imshow("Grayscaled image", image);
+        }
+
+        cv::threshold(image, image, 30, 255, cv::THRESH_BINARY);
 
         if (show) {
             cv::imshow("Thresholded image", image);
@@ -36,7 +41,7 @@ std::vector<std::string> ReadText::readSpeedLimit(std::vector<cv::Mat> input, bo
         ocr->SetImage(image.data, image.cols, image.rows, 1, image.step);
         std::string text = std::string(ocr->GetUTF8Text());
         delete ocr;
-        if (text != "" || text != "\n") {
+        if ((text != "" || text != "\n") && show) {
             std::cout << text << std::endl;
         }
         results.push_back(text);

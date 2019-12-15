@@ -45,7 +45,7 @@ std::vector<cv::Mat> DetectCircles::findCircles(cv::Mat image, bool show)
             croppedImages.push_back(croppedImage);
         }
         catch (cv::Exception &e) {
-            std::cout << e.what() << std::endl;
+            //std::cout << e.what() << std::endl;
         }
     }
 
