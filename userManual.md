@@ -17,7 +17,7 @@
 ```
 C:\Users\JohnDoe\Computer_Vision_Homework\SpeedSignRecognitionSolution\x64\Debug> SpeedSignRecognition D:/Pictures/OpenCV_samples
 ```
-    * 1.6 The program will run and you will see a number telling you what number was on the sign <br/>
+   1.6 The program will run and you will see a number telling you what number was on the sign <br/>
 
 ### 2. If you don't have TotalCommander
    2.1 Press the windows key (On Mac open up a terminal and jump to 2.4)  <br/>
