@@ -5,7 +5,7 @@ CLParser::CLParser(int argc, char **argv)
 {
 }
 
-bool CLParser::getCommand() const
+bool CLParser::getMode() const
 {
     bool command = parser.has("dev");
 
@@ -38,4 +38,17 @@ bool CLParser::getShow() const
         throw std::runtime_error("Error parsing command line arguments");
     }
 
-    return show;}
+    return show;
+}
+
+std::string CLParser::getLimit() const
+{
+    std::string limit = parser.get<std::string>("limit");
+
+    if (!parser.check()) {
+        parser.printErrors();
+        throw std::runtime_error("Error parsing command line arguments");
+    }
+
+    return limit;
+}

@@ -11,12 +11,13 @@ int main(int argc, char **argv)
 {
     //Read command
     CLParser clParser(argc, argv);
-    std::string path;
+    std::string path, limit;
     bool mode, show;
     try { 
         path = clParser.getPath();
-        mode = clParser.getCommand();
+        mode = clParser.getMode();
         show = clParser.getShow();
+        limit = clParser.getLimit();
     }
     catch (std::runtime_error &e) {
         std::cerr << e.what() << std::endl;
@@ -36,16 +37,18 @@ int main(int argc, char **argv)
     std::unique_ptr<ReadSpeedLimit> operation = std::make_unique<ReadSpeedLimit>();
     int found = 0;
     for (auto image : inputImages) {
-        std::vector<std::string> results = operation->execute(image);
+        std::vector<std::string> results = operation->execute(image, show);
         for (auto result : results) {
-            if (result.find("30") != std::string::npos) {
+            if (result.find(limit) != std::string::npos) {
                 found++;
             }
         }
     }
 
-    std::cout << "Correctly detected: " << found << std::endl;
-    std::cout << "We were " << (double)found / (double)inputImages.size() * 100 << "% effective" << std::endl;
+    if (mode) {
+        std::cout << "Correctly detected: " << found << std::endl;
+        std::cout << "We were " << (double)found / (double)inputImages.size() * 100 << "% effective" << std::endl;
+    }
 
     return 0;
 }

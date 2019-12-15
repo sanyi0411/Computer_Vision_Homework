@@ -4,45 +4,15 @@ DetectCircles::DetectCircles()
 {
 }
 
-std::vector<cv::Mat> DetectCircles::findCircles(cv::Mat image)
+std::vector<cv::Mat> DetectCircles::findCircles(cv::Mat image, bool show)
 {
     if (image.empty()) {
         std::cerr << "Could not open image\\frame" << std::endl;
         return cv::Mat();
     }
-    /*
-    cv::Mat grayScale;
-    cvtColor(_source, grayScale, cv::COLOR_BGR2GRAY);
 
-    cv::Mat blackandwhite;
-    cv::Canny(grayScale, blackandwhite, 50, 100, 3);
-
-    std::vector<std::vector<cv::Point>> contours;
-    cv::findContours(blackandwhite.clone(), contours, cv::RETR_CCOMP, cv::CHAIN_APPROX_SIMPLE);
-
-    std::vector<cv::Point> approx;
-    cv::Mat dest = _source.clone();
-
-    cv::Mat croppedImage;
-
-    for (int i = 0; i < contours.size(); ++i) {
-        cv::approxPolyDP(cv::Mat(contours[i]), approx, cv::arcLength(cv::Mat(contours[i]), true) * 0.02, true);
-
-        if (std::fabs(cv::contourArea(contours[i])) < 2000 || !cv::isContourConvex(approx))
-            continue;
-
-        cv::Rect r = cv::boundingRect(contours[i]);
-
-        if (approx.size() > 7 && std::abs(1 - ((double)r.width / r.height)) <= 0.2) {
-            croppedImage = grayScale(r);
-
-            return croppedImage;
-        }
-    }
-
-    return croppedImage;
-    */
-
+    cv::medianBlur(image, image, 3);
+ 
     // Convert input image to HSV
     cv::Mat imageHSV;
     cv::cvtColor(image, imageHSV, cv::COLOR_BGR2HSV);
@@ -60,12 +30,13 @@ std::vector<cv::Mat> DetectCircles::findCircles(cv::Mat image)
     // Use the Hough transform to detect circles in the combined threshold image
     std::vector<cv::Vec3f> circles;
     std::vector<cv::Mat> croppedImages;
+    cv::Mat imageToShow = image.clone();
     cv::HoughCircles(redHueImage, circles, cv::HOUGH_GRADIENT, 1, redHueImage.rows / 8, 100, 20, 0, 0);
     for (size_t currentCircle = 0; currentCircle < circles.size(); ++currentCircle) {
         cv::Point center(std::round(circles[currentCircle][0]), std::round(circles[currentCircle][1]));
         int radius = std::round(circles[currentCircle][2]);
 
-        cv::circle(imageHSV, center, radius, cv::Scalar(0, 255, 0), 5);
+        cv::circle(imageToShow, center, radius, cv::Scalar(0, 255, 0), 5);
     
         const cv::Rect r(std::max(center.x - radius, 0), std::max(center.y - radius, 0), std::min(radius * 2, image.cols), std::min(radius * 2, image.rows));
         cv::Mat croppedImage;
@@ -76,6 +47,10 @@ std::vector<cv::Mat> DetectCircles::findCircles(cv::Mat image)
         catch (cv::Exception &e) {
             std::cout << e.what() << std::endl;
         }
+    }
+
+    if(show) {
+        cv::imshow("Found circles", imageToShow);
     }
 
     return croppedImages;
