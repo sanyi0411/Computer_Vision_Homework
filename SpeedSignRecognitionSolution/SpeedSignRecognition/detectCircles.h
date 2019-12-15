@@ -9,9 +9,9 @@
 class DetectCircles
 {
 public:
-    DetectCircles(cv::Mat image);
+    DetectCircles();
 
-    cv::Mat findCircle();
+    std::vector<cv::Mat> findCircles(cv::Mat image);
 
 private:
     cv::Mat _source;

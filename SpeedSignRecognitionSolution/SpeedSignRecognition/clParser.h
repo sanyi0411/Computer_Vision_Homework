@@ -9,10 +9,14 @@ public:
     CLParser(int argc, char **argv);
 
     bool getCommand() const;
+    std::string getPath() const;
+    bool getShow() const;
 
     std::string keys =
         "{help h usage ? |      | print this message   }"
-        "{dev            |      | run in developer mode   }";
+        "{path           |      | path to the folder containing images   }"
+        "{dev            |      | run in developer mode   }"
+        "{show           |      | show intermediate images   }";
 
 private:
     cv::CommandLineParser parser;

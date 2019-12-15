@@ -4,13 +4,11 @@ ReadSpeedLimit::ReadSpeedLimit()
 {
 }
 
-std::string ReadSpeedLimit::execute(std::vector<cv::Mat> input)
+std::vector<std::string> ReadSpeedLimit::execute(cv::Mat image)
 {
-	for (auto image : input) {
-		DetectCircles circles(image);
-		cv::Mat m = circles.findCircle().clone();
-		
-		ReadText read;
-		return read.readSpeedLimit(m);
-	}
+    DetectCircles detectCircles;
+    std::vector<cv::Mat> foundCircles = detectCircles.findCircles(image);
+       
+    ReadText read;
+    return read.readSpeedLimit(foundCircles);
 }

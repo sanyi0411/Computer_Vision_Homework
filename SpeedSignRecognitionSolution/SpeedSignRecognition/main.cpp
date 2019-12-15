@@ -9,22 +9,43 @@
 
 int main(int argc, char **argv)
 {
+    //Read command
     CLParser clParser(argc, argv);
-
-    try 
-    { 
-        bool mode = clParser.getCommand();
+    std::string path;
+    bool mode, show;
+    try { 
+        path = clParser.getPath();
+        mode = clParser.getCommand();
+        show = clParser.getShow();
     }
-    catch (std::runtime_error &e)
-    {
-        std::cout << e.what() << std::endl;
+    catch (std::runtime_error &e) {
+        std::cerr << e.what() << std::endl;
     }
 
-	std::unique_ptr<ImageLoader> loader(new ImageLoader);
-	std::vector<cv::Mat> inputImages = loader->loadImagesFromFolder("D:/Kepek/OpenCV/30");
+    //Load images
+    std::unique_ptr<ImageLoader> loader = std::make_unique<ImageLoader>();
+    std::vector<cv::Mat> inputImages;
+    try {
+        inputImages = loader->loadImagesFromFolder(path);
+    }
+    catch (cv::Exception &e) {
+        std::cerr << e.what() << std::endl;
+    }
 
-	std::unique_ptr<ReadSpeedLimit> operation(new ReadSpeedLimit);
-	operation->execute(inputImages);
+    //Read sign
+    std::unique_ptr<ReadSpeedLimit> operation = std::make_unique<ReadSpeedLimit>();
+    int found = 0;
+    for (auto image : inputImages) {
+        std::vector<std::string> results = operation->execute(image);
+        for (auto result : results) {
+            if (result.find("30") != std::string::npos) {
+                found++;
+            }
+        }
+    }
+
+    std::cout << "Correctly detected: " << found << std::endl;
+    std::cout << "We were " << (double)found / (double)inputImages.size() * 100 << "% effective" << std::endl;
 
     return 0;
 }

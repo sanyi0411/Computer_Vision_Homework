@@ -11,6 +11,6 @@ class ReadSpeedLimit
 {
 public:
     ReadSpeedLimit();
-    std::string execute(std::vector<cv::Mat> input);
+    std::vector<std::string> execute(cv::Mat image);
 };
 
