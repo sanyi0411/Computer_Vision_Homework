@@ -14,8 +14,6 @@ public:
     ReadText();
     
     std::vector<std::string> readSpeedLimit(std::vector<cv::Mat> input, bool show);
-
-    void setThresholdValue(int input);
 private:
 };
 

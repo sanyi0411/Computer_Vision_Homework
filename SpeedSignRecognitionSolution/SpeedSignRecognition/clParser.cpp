@@ -23,7 +23,7 @@ std::string CLParser::getPath() const
 
     if (!parser.check()) {
         parser.printErrors();
-        throw std::runtime_error("Error parsing command line arguments");
+        throw std::runtime_error("No folder path provided");
     }
 
     return imgPath;
